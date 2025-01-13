@@ -1,13 +1,18 @@
 <template>
   <div class="app">
-    <section class="content-section section1">
+    <nav class="navbar">
+      <a href="#home">Home</a>
+      <a href="#fotos">Fotos</a>
+      <a href="#abada">Entrega de Abadás</a>
+    </nav>
+    <section id="home" class="content-section section1">
       <Parallaxy :speed="100" direction="opposite" class="parallax-container bg"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy>
     </section>
 
-    <section class="content-section flex section2">
+    <section id="fotos" class="content-section flex section2">
       <!-- <Parallaxy :speed="100" direction="opposite" class="parallax-container bg"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
@@ -30,61 +35,70 @@
       </div>
     </section>
 
-    <section class="content-section flex section3">
+    <section id="abada" class="content-section flex section3">
       <Parallaxy :speed="100" direction="opposite" class="parallax-container bg"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy>
-      <Parallaxy :speed="20" class="relative z-20 flex items-center justify-items-center">
+      <Parallaxy v-if="!convidado" :speed="20" class="relative z-20 flex items-center justify-items-center">
         <div class="box rounded-xl p-12 m-6">
           <h2>Eu vou!</h2>
+          <div class="error-box p-8 rounded font-bold" v-if="error">{{ error }}</div>
           <form class="" @submit.prevent="">
             <div class="f-input">
-              <label for="i_nome">
+              <label for="i_telefone">
                 Informe seu celular para confirmar sua presença e confira os locais de entrega do abadá.
               </label>
-              <input id="i_nome" required type="number" name="nome" placeholder="Digite celular aqui" class="ref-input rounded"/>
+              <input id="i_telefone" required type="number" inputmode="numeric" name="telefone" v-model="telefone" placeholder="Digite celular aqui" class="ref-input rounded"/>
             </div>
             <div class="f-button mt-6">
-              <button class="rounded">Ver meu convite</button>
+              <button :disabled="loading" @click="submit" class="rounded px-8">Ver meu convite</button>
             </div>
           </form>
         </div>
       </Parallaxy>
-      <Parallaxy :speed="80" direction="opposite" class="relative z-20 flex justify-end items-center">
+      <Parallaxy v-if="convidado" :speed="80" direction="opposite" class="relative z-20 top-[10%] lg:top-[0%] flex justify-end items-center">
         <div class="box rounded-xl p-12 m-6 text-left">
           <h2>Entrega de abadá</h2>
           <form class="" @submit.prevent="">
             <div class="f-input-radio">
-                <label for="i_local1">
-                <input id="i_local1" value="stella" required type="radio" name="local" class="ref-input rounded"/>
+              <label for="i_local1" :class="local === 'stella'? 'font-bold': ''">
+                <input id="i_local1" value="stella" v-model="local" type="radio" name="local" class="ref-input rounded"/>
                 Retirar em Stella Maris
               </label>
-                <label for="i_local2">
-                <input id="i_local2" value="villa-laura" required type="radio" name="local" class="ref-input rounded"/>
-                Retirar em Vila Laura
+              <label for="i_local2" :class="local === 'villa-laura'? 'font-bold': ''">
+                <input id="i_local2" value="villa-laura" v-model="local" type="radio" name="local" class="ref-input rounded"/>
+                Retirar na Vila Laura
               </label>
             </div>
             <div>
               <h3 class="text-xl font-bold pt-10">Convidados:</h3>
-              <table>
+              <table class="font-bold">
                 <tr>
                   <td>
-                    Rafael Freitas
+                    {{ convidado?.nome }}
                   </td>
                 </tr>
-                <tr>
+                <tr 
+                  v-for="(row, index) in convidado?.acompanhantes"
+                  :key="index"
+                >
                   <td>
-                    Tainã Pinheiro
+                    {{ row.nome }}
                   </td>
                 </tr>
               </table>
+              <div class="box-confirmado p-8 rounded font-bold text-center" v-if="convidado.confirmado">Prensença confirmada! <br/>Te espero lá!!!</div>
             </div>
             <div class="f-button mt-6 text-center">
-              <button class="rounded">Confirmar presença</button>
+              <button :disabled="loading" @click="submitConfirmar" class="rounded px-8" v-if="!convidado.confirmado">Confirmar presença</button>
             </div>
           </form>
         </div>
+      </Parallaxy>
+
+      <Parallaxy v-if="convidado" :speed="80" direction="normal" class="absolute m-20 z-20 top-[10%] lg:left-[50%] lg:top-[30%] flex justify-start items-center">
+        <img src="/abada.png" class="w-100 lg:w-full rounded-xl" />
       </Parallaxy>
 
     </section>
@@ -93,16 +107,67 @@
 </template>
 
 <script>
+import {ref} from 'vue'
 import Parallaxy from '@lucien144/vue3-parallaxy';
 import Gallery from './components/Gallery.vue';
+import axios from 'axios'
 
 export default {
   components: {
     Parallaxy,
     Gallery
   },
-  data() {
+  setup () {
+    const telefone = ref('')
+    const local = ref('stella')
+    const convidado = ref(null)
+    const confirmado = ref(null)
+    const error = ref(null)
+    const loading = ref(false)
+    const submit = async () => {
+      loading.value = true
+      error.value = null
+      let res = await axios.get('/api/convidado?cel=' + telefone.value, {
+        
+      })
+      console.log("🚀 ~ submit ~ telefone.value:", telefone.value)
+      console.log("🚀 ~ submit ~ res:", res.data)
+
+      if (res.data?.status !== 'error') {
+        convidado.value = res.data.data
+      }
+      else {
+        error.value = res.data.error
+      }
+      loading.value = false
+    }
+    const submitConfirmar = async () => {
+      loading.value = true
+      error.value = null
+      let res = await axios.get('/api/confirmar?cel=' + telefone.value + '&local=' + local.value, {
+        
+      })
+      console.log("🚀 ~ submit ~ telefone.value:", telefone.value)
+      console.log("🚀 ~ submit ~ res:", res.data)
+
+      if (res.data?.status !== 'error') {
+        convidado.value = res.data.data
+        // confirmado.value = res.data.data
+      }
+      else {
+        error.value = res.data.error
+      }
+      loading.value = false
+    }
+
     return {
+      loading,
+      error,
+      local,
+      convidado,
+      telefone: telefone,
+      submitConfirmar,
+      submit
     }
   }
 };
@@ -117,7 +182,30 @@ body {
   height: 100%;
   background-color: #f1e3f9;
 }
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding: 10px;
+}
 
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  transition: background 0.3s;
+}
+
+.navbar a:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
+}
 .content-section {
   height: 100vh;
   width: 100vw;
@@ -202,5 +290,11 @@ body {
 
 .box {
   background: #f1e3f9dc;
+}
+.error-box {
+  background: rgb(250, 110, 110);
+}
+.box-confirmado {
+  background: rgb(110, 250, 117);
 }
 </style>
