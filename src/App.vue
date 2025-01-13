@@ -1,12 +1,12 @@
 <template>
   <div class="app">
     <nav class="navbar">
-      <a href="#home">Home</a>
-      <a href="#fotos">Fotos</a>
-      <a href="#abada">Entrega de Abadás</a>
+      <a href="#home" @click.prevent="smoothScroll('home')">Home</a>
+      <a href="#fotos" @click.prevent="smoothScroll('fotos')">Fotos</a>
+      <a href="#abada" @click.prevent="smoothScroll('abada')">Entrega de Abadás</a>
     </nav>
     <section id="home" class="content-section section1">
-      <Parallaxy :speed="100" direction="opposite" class="parallax-container bg"
+      <Parallaxy :speed="100" direction="opposite" class="parallax-container bg lg:top-[-100px]"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy>
@@ -17,7 +17,7 @@
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy> -->
-      <Gallery />
+
       <div class="flex space-x-64">
         <!-- <Parallaxy :speed="50" class="relative left-[20%] top-[10%]  z-40">
           <h1>30 carnavais</h1>
@@ -27,7 +27,7 @@
         </Parallaxy> -->
         <Parallaxy :speed="40" direction="opposite" class="relative z-20 flex justify-end items-center">
           <!-- <img src="/tai-foto2.jpg?2" class="w-100 lg:w-2/1 rounded-xl"> -->
-          
+          <Gallery />
         </Parallaxy>
         <!-- <Parallaxy :speed="80" class="relative top-[50%]  z-10">
           <img src="/tai-foto3.jpg?6" class="w-100 lg:w-1/2 rounded-xl">
@@ -49,7 +49,7 @@
               <label for="i_telefone">
                 Informe seu celular para confirmar sua presença e confira os locais de entrega do abadá.
               </label>
-              <input id="i_telefone" required type="number" inputmode="numeric" name="telefone" v-model="telefone" placeholder="Digite celular aqui" class="ref-input rounded"/>
+              <input id="i_telefone" required type="number" inputmode="numeric" name="telefone" v-model="telefone" placeholder="Digite seu celular aqui" class="ref-input rounded"/>
             </div>
             <div class="f-button mt-6">
               <button :disabled="loading" @click="submit" class="rounded px-8">Ver meu convite</button>
@@ -160,7 +160,18 @@ export default {
       loading.value = false
     }
 
+    const smoothScroll = (id) => {
+      const target = document.getElementById(id); // Obtém o elemento pelo ID
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth", // Define a rolagem suave
+          block: "start", // Alinha o início da seção ao topo
+        });
+      }
+    }
+
     return {
+      smoothScroll,
       loading,
       error,
       local,
@@ -234,9 +245,10 @@ body {
 }
 .section1 .bg {
   background-repeat: no-repeat; background-image: url('/section1.jpg');
+  /* top: -100px; */
 }
 .section1 .wrapper {
-  /* top: -380px; */
+  top: -100px;
   position: relative;
   width: 100%;
   height: 100%;
@@ -251,6 +263,7 @@ body {
 .section3 .bg {
   background-repeat: no-repeat; background-image: url('/section3.png');
   /* background-color: #222; */
+  top: -110px;
 }
 .section3 {
   color: #222;
