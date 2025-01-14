@@ -11,7 +11,9 @@
   "dependencies": {
     "@lucien144/vue3-parallaxy": "^0.1.2",
     "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
     "gsap": "^3.12.5",
+    "mongodb": "^6.12.0",
     "swiper": "^11.2.1",
     "vue": "^3.5.13",
     "vue3-parallax": "^0.1.4"

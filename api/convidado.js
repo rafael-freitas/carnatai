@@ -1,21 +1,28 @@
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
+// import { createBlob } from '@vercel/blob';
+import clientPromise from '../lib/mongodb.js';
 
 export async function GET(request) {
+  const client = await clientPromise;
+  const db = client.db('carnatai');
+
   let url = new URL(request.url)
-  console.log(request, url)
+  // console.log(request, url)
 
   let cel = url.searchParams.get('cel')
-  console.log("🚀 ~ GET ~ cel:", cel)
+  // console.log("🚀 ~ GET ~ cel:", cel)
+
+  const convidado = await db.collection('convidados').findOne({ cel: cel });
 
   // Caminho para o arquivo JSON
-  const filePath = path.join(process.cwd(), 'lista.json');
+  // const filePath = path.join(process.cwd(), 'lista.json');
 
   // let lista = JSON.parse(fs.readlinkSync('./api/lista.json'))
   // Ler o conteúdo do JSON
-  const lista = JSON.parse(await readFile(filePath, 'utf8'));
+  // const lista = JSON.parse(await readFile(filePath, 'utf8'));
 
-  let convidado = lista.find(row => row.cel === cel)
+  // let convidado = lista.find(row => row.cel === cel)
     
   // Enviar o conteúdo como resposta
   // console.log("🚀 ~ GET ~ lista:", lista)
