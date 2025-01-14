@@ -88,10 +88,10 @@
                   </td>
                 </tr>
               </table>
-              <div class="box-confirmado p-8 rounded font-bold text-center" v-if="convidado.confirmado">Prensença confirmada! <br/>Te espero lá!!!</div>
+              <div class="box-confirmado p-8 rounded font-bold text-center" v-if="convidado.confirmado == 'sim'">Prensença confirmada! <br/>Te espero lá!!!</div>
             </div>
             <div class="f-button mt-6 text-center">
-              <button :disabled="loading" @click="submitConfirmar" class="rounded px-8" v-if="!convidado.confirmado">Confirmar presença</button>
+              <button :disabled="loading" @click="submitConfirmar" class="rounded px-8" v-if="convidado.confirmado != 'sim'">Confirmar presença</button>
             </div>
           </form>
         </div>

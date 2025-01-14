@@ -32,7 +32,7 @@ export async function GET(request) {
   let response = {}
 
   if (convidado) {
-    convidado.confirmado = true
+    convidado.confirmado = 'sim'
     convidado.retirada = local
     // await writeFile(filePath, JSON.stringify(lista, null, 2))
     let result = await db.collection('convidados').updateOne({ cel: cel }, {
