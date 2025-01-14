@@ -4,41 +4,50 @@ import path from 'path';
 import clientPromise from '../lib/mongodb.js';
 
 export async function GET(request) {
-  const client = await clientPromise;
-  const db = client.db('carnatai');
+  try {
+    const client = await clientPromise;
+    const db = client.db('carnatai');
 
-  let url = new URL(request.url)
-  // console.log(request, url)
+    console.log('Conexão bem-sucedida!');
 
-  let cel = url.searchParams.get('cel')
-  // console.log("🚀 ~ GET ~ cel:", cel)
+    let url = new URL(request.url)
+    // console.log(request, url)
 
-  const convidado = await db.collection('convidados').findOne({ cel: cel });
+    let cel = url.searchParams.get('cel')
+    // console.log("🚀 ~ GET ~ cel:", cel)
 
-  // Caminho para o arquivo JSON
-  // const filePath = path.join(process.cwd(), 'lista.json');
+    const convidado = await db.collection('convidados').findOne({ cel: cel });
 
-  // let lista = JSON.parse(fs.readlinkSync('./api/lista.json'))
-  // Ler o conteúdo do JSON
-  // const lista = JSON.parse(await readFile(filePath, 'utf8'));
+    // Caminho para o arquivo JSON
+    // const filePath = path.join(process.cwd(), 'lista.json');
 
-  // let convidado = lista.find(row => row.cel === cel)
+    // let lista = JSON.parse(fs.readlinkSync('./api/lista.json'))
+    // Ler o conteúdo do JSON
+    // const lista = JSON.parse(await readFile(filePath, 'utf8'));
+
+    // let convidado = lista.find(row => row.cel === cel)
+      
+    // Enviar o conteúdo como resposta
+    // console.log("🚀 ~ GET ~ lista:", lista)
+    // console.log("🚀 ~ GET ~ lista:", lista, convidado)
+
+    let response = {}
+
+    if (convidado) {
+      // convidado.confirmado = true
+      // await writeFile(filePath, JSON.stringify(lista, null, 2))
+      response.status = 'ok'
+      response.data = convidado
+    }
+    else {
+      response.status = 'error'
+      response.error = 'Convidado não encontrado!'
+    }
+    return new Response(JSON.stringify(response));
     
-  // Enviar o conteúdo como resposta
-  // console.log("🚀 ~ GET ~ lista:", lista)
-  // console.log("🚀 ~ GET ~ lista:", lista, convidado)
-
-  let response = {}
-
-  if (convidado) {
-    // convidado.confirmado = true
-    // await writeFile(filePath, JSON.stringify(lista, null, 2))
-    response.status = 'ok'
-    response.data = convidado
+  } catch (error) {
+    console.error('Erro ao conectar com o MongoDB:', error);
+    return new Response(JSON.stringify(error));
   }
-  else {
-    response.status = 'error'
-    response.error = 'Convidado não encontrado!'
-  }
-  return new Response(JSON.stringify(response));
+  
 }
