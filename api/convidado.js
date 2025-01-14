@@ -47,7 +47,10 @@ export async function GET(request) {
     
   } catch (error) {
     console.error('Erro ao conectar com o MongoDB:', error);
-    return new Response(JSON.stringify(error));
+    const response = {}
+    response.status = 'error'
+    response.error = error.message
+    return new Response(JSON.stringify(response));
   }
   
 }
