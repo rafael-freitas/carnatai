@@ -53,12 +53,12 @@ export default {
     return {
       modules: [Autoplay, Pagination, Navigation],
       images: [
-        '/fotos/1.jpeg', '/fotos/2.jpeg', '/fotos/3.jpeg', '/fotos/4.jpeg', '/fotos/5.jpeg', 
-        '/fotos/6.jpeg', '/fotos/7.jpeg', '/fotos/8.jpeg', '/fotos/9.jpeg', '/fotos/10.jpeg', 
+        '/fotos/1.jpeg','/fotos/28.jpeg', '/fotos/2.jpeg', '/fotos/3.jpeg', '/fotos/4.jpeg', '/fotos/5.jpeg', 
+        '/fotos/7.jpeg', '/fotos/8.jpeg', '/fotos/9.jpeg', 
         '/fotos/11.jpeg', '/fotos/12.jpeg', '/fotos/13.jpeg', '/fotos/14.jpeg', '/fotos/15.jpeg', 
         '/fotos/16.jpeg', '/fotos/17.jpeg', '/fotos/18.jpeg', '/fotos/19.jpeg', '/fotos/20.jpeg', '/fotos/21.jpeg', 
         '/fotos/22.jpeg', '/fotos/23.jpeg', '/fotos/24.jpeg', '/fotos/25.jpeg', '/fotos/26.jpeg', '/fotos/27.jpeg', 
-        '/fotos/28.jpeg', '/fotos/29.jpeg', '/fotos/30.jpeg', '/fotos/31.jpeg', '/fotos/32.jpeg', '/fotos/33.jpeg', 
+        '/fotos/29.jpeg', '/fotos/30.jpeg', '/fotos/31.jpeg', '/fotos/32.jpeg', '/fotos/33.jpeg', 
         '/fotos/34.jpeg', '/fotos/35.jpeg', '/fotos/36.jpeg', '/fotos/37.jpeg', '/fotos/38.jpeg', '/fotos/39.jpeg', 
         '/fotos/40.jpeg', '/fotos/41.jpeg'
       ]

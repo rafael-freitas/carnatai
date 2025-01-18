@@ -6,17 +6,29 @@
       <a href="#abada" @click.prevent="smoothScroll('abada')">Entrega de Abadás</a>
     </nav>
     <section id="home" class="content-section section1">
+      <Parallaxy :speed="300" direction="opposite" class="absolute left-[13%] top-[-10%] z-50">
+        <!-- <h1>Você é mais que convidado para estar comigo nesse bloquinho!</h1> -->
+        <div id="embed-iframe" style="width:200px"></div>
+        <!-- <button @click="autoplayClick">E para entrar no clima do evento, uma playlist especial para um dia especial. Solta o PLAY!</button> -->
+      </Parallaxy>
       <Parallaxy :speed="100" direction="opposite" class="parallax-container bg lg:top-[-100px]"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy>
+      <Parallaxy :speed="120" class="absolute left-[15%] lg:left-[35%] top-[70%] lg:top-[65%] z-40">
+        <div class="font-bold">Está chegando a hora!!!</div>
+        <vue3-flip-countdown 
+        mainColor="#bc55f7" 
+        secondFlipColor="#f96e8f" 
+        mainFlipBackgroundColor="#392b47"
+        secondFlipBackgroundColor="#745a8e"
+        :labels="{days: 'Dias', hours: 'Horas', minutes: 'Minutos', seconds: 'Segundos'}"
+        deadline="2025-02-22 14:00:00"/>
+      </Parallaxy>
     </section>
 
     <section id="fotos" class="content-section flex section2">
-      <!-- <Parallaxy :speed="100" direction="opposite" class="parallax-container bg"
-          :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
-        >
-      </Parallaxy> -->
+      
 
       <div class="flex space-x-64">
         <!-- <Parallaxy :speed="50" class="relative left-[20%] top-[10%]  z-40">
@@ -42,14 +54,19 @@
       </Parallaxy>
       <Parallaxy v-if="!convidado" :speed="20" class="relative z-20 flex items-center justify-items-center">
         <div class="box rounded-xl p-12 m-6">
-          <h2>Eu vou!</h2>
+          <h2>Você é mais que convidado para estar comigo nesse bloquinho!</h2>
           <div class="error-box p-8 rounded font-bold" v-if="error">{{ error }}</div>
+          <p>Eu, como uma soteropolitana nata nascida e criada no carnaval de Salvador, não poderia comemorar meus 30 anos, em fevereiro, de outra forma.</p>
+          <p>Se você recebeu esse link, é porque sua presença é muuuito importante!</p>
+          <p>Estou mandando com bastante antecedência ein? <br/><strong>Adiante seu lado e presença até o dia 31/01!!</strong> <br/>Não tem virada de lote, mas as camisas são limitadas!</p>
+          <p class="font-bold">Entrega dos abadás: a partir de 10/02/2025.</p>
+          <p>Em seguida, selecione onde fica mais fácil para acertamos a entrega do abadá. Se não puder comparecer, peço que não preencha</p>
           <form class="" @submit.prevent="">
             <div class="f-input">
-              <label for="i_telefone">
-                Informe seu celular para confirmar sua presença e confira os locais de entrega do abadá.
+              <label for="i_telefone" class="font-bold">
+                Para confirmar presença, coloque o seu telefone aqui
               </label>
-              <input id="i_telefone" required type="number" inputmode="numeric" name="telefone" v-model="telefone" placeholder="Digite seu celular aqui" class="ref-input rounded"/>
+              <input id="i_telefone" required type="number" inputmode="numeric" name="telefone" v-model="telefone" placeholder="Ex: 71999995555" class="ref-input rounded"/>
             </div>
             <div class="f-button mt-6">
               <button :disabled="loading" @click="submit" class="rounded px-8">Ver meu convite</button>
@@ -107,7 +124,7 @@
 </template>
 
 <script>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import Parallaxy from '@lucien144/vue3-parallaxy';
 import Gallery from './components/Gallery.vue';
 import axios from 'axios'
@@ -115,7 +132,7 @@ import axios from 'axios'
 export default {
   components: {
     Parallaxy,
-    Gallery
+    Gallery,
   },
   setup () {
     const telefone = ref('')
@@ -147,8 +164,6 @@ export default {
       let res = await axios.get('/api/confirmar?cel=' + telefone.value + '&local=' + local.value, {
         
       })
-      console.log("🚀 ~ submit ~ telefone.value:", telefone.value)
-      console.log("🚀 ~ submit ~ res:", res.data)
 
       if (res.data?.status !== 'error') {
         convidado.value = res.data.data
@@ -170,7 +185,32 @@ export default {
       }
     }
 
+    var controller
+
+    const autoplayClick = () => {
+      controller.play();
+    }
+
+    onMounted(() => {      
+      window.onSpotifyIframeApiReady = IFrameAPI => {
+        const element = document.getElementById('embed-iframe');
+        const options = {
+          uri: 'spotify:playlist:4ZMtWQn47mhpUyemcRQQ8K',
+        };
+        const callback = EmbedController => {
+          controller = EmbedController;
+          controller.play();
+          controller.addListener('ready', () => {
+            console.log('ready');
+            autoplayClick()
+          });
+        };
+        IFrameAPI.createController(element, options, callback);
+      };
+    })
+
     return {
+      autoplayClick,
       smoothScroll,
       loading,
       error,
@@ -253,9 +293,10 @@ body {
   width: 100%;
   height: 100%;
 }
-.section2 h1 {
-  font-size: 2em;
+.section1 h1 {
+  font-size: 1.5em;
   color: #222;
+  padding: 0 1em;
 }
 .section2 .bg {
   /* background-repeat: no-repeat; background-image: url('/section2.png'); */
@@ -269,7 +310,7 @@ body {
   color: #222;
 }
 .section3 h2 {
-  font-size: 2em;
+  font-size: 1.5em;
 }
 .section4 .bg {
   background-repeat: no-repeat; background-image: url('/section4.png');
