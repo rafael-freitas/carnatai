@@ -6,17 +6,13 @@
       <a href="#abada" @click.prevent="smoothScroll('abada')">Entrega de Abadás</a>
     </nav>
     <section id="home" class="content-section section1">
-      <Parallaxy :speed="300" direction="opposite" class="absolute left-[13%] top-[-10%] z-50">
-        <!-- <h1>Você é mais que convidado para estar comigo nesse bloquinho!</h1> -->
-        <div id="embed-iframe" style="width:200px"></div>
-        <!-- <button @click="autoplayClick">E para entrar no clima do evento, uma playlist especial para um dia especial. Solta o PLAY!</button> -->
-      </Parallaxy>
+      
       <Parallaxy :speed="100" direction="opposite" class="parallax-container bg lg:top-[-100px]"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy>
-      <Parallaxy :speed="120" class="absolute left-[15%] lg:left-[35%] top-[70%] lg:top-[65%] z-40">
-        <div class="font-bold">Está chegando a hora!!!</div>
+      <Parallaxy :speed="120" class="absolute left-[12%] lg:left-[35%] top-[22%] lg:top-[65%] z-40">
+        <div class="font-bold" style="color:#4e0e72">Está chegando a hora!!!</div>
         <vue3-flip-countdown 
         mainColor="#bc55f7" 
         secondFlipColor="#f96e8f" 
@@ -25,6 +21,17 @@
         :labels="{days: 'Dias', hours: 'Horas', minutes: 'Minutos', seconds: 'Segundos'}"
         deadline="2025-02-22 14:00:00"/>
       </Parallaxy>
+
+      <Parallaxy :speed="300" direction="opposite" class="absolute left-[13%] top-[50%] z-50" style="width:300px; color:#4e0e72">
+        <!-- <h1>Você é mais que convidado para estar comigo nesse bloquinho!</h1> -->
+        <div id="embed-iframe" style="width:300px"></div>
+        <div>E para entrar no clima do evento, uma playlist especial para um dia especial.</div>
+        <div class="f-button">
+          <button class="btnPlay" @click="autoplayClick">Solta o PLAY!</button>
+        </div>
+        
+      </Parallaxy>
+
     </section>
 
     <section id="fotos" class="content-section flex section2">
@@ -58,9 +65,9 @@
           <div class="error-box p-8 rounded font-bold" v-if="error">{{ error }}</div>
           <p>Eu, como uma soteropolitana nata nascida e criada no carnaval de Salvador, não poderia comemorar meus 30 anos, em fevereiro, de outra forma.</p>
           <p>Se você recebeu esse link, é porque sua presença é muuuito importante!</p>
-          <p>Estou mandando com bastante antecedência ein? <br/><strong>Adiante seu lado e presença até o dia 31/01!!</strong> <br/>Não tem virada de lote, mas as camisas são limitadas!</p>
+          <p>Estou mandando com bastante antecedência ein? <br/><strong>Adiante seu lado e confirme presença até o dia 31/01!!</strong> <br/>Não tem virada de lote, mas as camisas são limitadas!</p>
           <p class="font-bold">Entrega dos abadás: a partir de 10/02/2025.</p>
-          <p>Em seguida, selecione onde fica mais fácil para acertamos a entrega do abadá. Se não puder comparecer, peço que não preencha</p>
+          <p>Em seguida, selecione onde fica mais fácil para acertamos a entrega do abadá. Se não puder comparecer, peço que não preencha.</p>
           <form class="" @submit.prevent="">
             <div class="f-input">
               <label for="i_telefone" class="font-bold">
@@ -188,7 +195,7 @@ export default {
     var controller
 
     const autoplayClick = () => {
-      controller.play();
+      controller.togglePlay();
     }
 
     onMounted(() => {      
@@ -196,6 +203,8 @@ export default {
         const element = document.getElementById('embed-iframe');
         const options = {
           uri: 'spotify:playlist:4ZMtWQn47mhpUyemcRQQ8K',
+          width: 300,
+          height: 80,
         };
         const callback = EmbedController => {
           controller = EmbedController;
