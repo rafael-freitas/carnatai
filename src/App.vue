@@ -27,7 +27,7 @@
         <div id="embed-iframe" style="width:300px"></div>
         <div>E para entrar no clima do evento, uma playlist especial para um dia especial.</div>
         <div class="f-button">
-          <button class="btnPlay" @click="autoplayClick">Solta o PLAY!</button>
+          <button class="btnPlay rounded-lg" @click="autoplayClick">Solta o PLAY!</button>
         </div>
         
       </Parallaxy>
@@ -67,7 +67,7 @@
           <p>Se você recebeu esse link, é porque sua presença é muuuito importante!</p>
           <p>Estou mandando com bastante antecedência ein? <br/><strong>Adiante seu lado e confirme presença até o dia 31/01!!</strong> <br/>Não tem virada de lote, mas as camisas são limitadas!</p>
           <p class="font-bold">Entrega dos abadás: a partir de 10/02/2025.</p>
-          <p>Em seguida, selecione onde fica mais fácil para acertamos a entrega do abadá. Se não puder comparecer, peço que não preencha.</p>
+          <p>Em seguida, selecione onde fica mais fácil para acertamos a entrega do abadá. <br/>Para melhor distribuição das camisas, se não puder comparecer, peço que não preencha o campo abaixo.</p>
           <form class="" @submit.prevent="">
             <div class="f-input">
               <label for="i_telefone" class="font-bold">
@@ -115,7 +115,7 @@
               <div class="box-confirmado p-8 rounded font-bold text-center" v-if="convidado.confirmado == 'sim'">Prensença confirmada! <br/>Te espero lá!!!</div>
             </div>
             <div class="f-button mt-6 text-center">
-              <button :disabled="loading" @click="submitConfirmar" class="rounded px-8" v-if="convidado.confirmado != 'sim'">Confirmar presença</button>
+              <button :disabled="loading" @click="submitConfirmar" class="rounded-lg px-8" v-if="convidado.confirmado != 'sim'">Confirmar presença</button>
             </div>
           </form>
         </div>
