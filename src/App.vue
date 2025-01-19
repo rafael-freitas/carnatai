@@ -65,7 +65,7 @@
           <div class="error-box p-8 rounded font-bold" v-if="error">{{ error }}</div>
           <p>Eu, como uma soteropolitana nata nascida e criada no carnaval de Salvador, não poderia comemorar meus 30 anos, em fevereiro, de outra forma.</p>
           <p>Se você recebeu esse link, é porque sua presença é muuuito importante!</p>
-          <p>Estou mandando com bastante antecedência ein? <br/><strong>Adiante seu lado e confirme presença até o dia 31/01!!</strong> <br/>Não tem virada de lote, mas as camisas são limitadas!</p>
+          <p><strong>Adiante seu lado e confirme presença até o dia 31/01!!</strong> <br/>Não tem virada de lote, mas as camisas são limitadas!</p>
           <p class="font-bold">Entrega dos abadás: a partir de 10/02/2025.</p>
           <p>Em seguida, selecione onde fica mais fácil para acertamos a entrega do abadá. <br/>Para melhor distribuição das camisas, se não puder comparecer, peço que não preencha o campo abaixo.</p>
           <form class="" @submit.prevent="">
