@@ -566,78 +566,6 @@ video {
   position: relative;
 }
 
-.left-\[20\%\] {
-  left: 20%;
-}
-
-.top-\[10\%\] {
-  top: 10%;
-}
-
-.top-\[30\%\] {
-  top: 30%;
-}
-
-.top-\[50\%\] {
-  top: 50%;
-}
-
-.top-\[70\%\] {
-  top: 70%;
-}
-
-.left-\[30\%\] {
-  left: 30%;
-}
-
-.left-\[50\%\] {
-  left: 50%;
-}
-
-.left-\[35\%\] {
-  left: 35%;
-}
-
-.left-\[25\%\] {
-  left: 25%;
-}
-
-.left-\[15\%\] {
-  left: 15%;
-}
-
-.top-\[80\%\] {
-  top: 80%;
-}
-
-.top-\[75\%\] {
-  top: 75%;
-}
-
-.top-\[77\%\] {
-  top: 77%;
-}
-
-.left-\[5\%\] {
-  left: 5%;
-}
-
-.top-\[1\%\] {
-  top: 1%;
-}
-
-.top-\[0\%\] {
-  top: 0%;
-}
-
-.top-\[-10\%\] {
-  top: -10%;
-}
-
-.left-\[10\%\] {
-  left: 10%;
-}
-
 .left-\[12\%\] {
   left: 12%;
 }
@@ -646,32 +574,20 @@ video {
   left: 13%;
 }
 
-.top-\[-20\%\] {
-  top: -20%;
+.left-\[20\%\] {
+  left: 20%;
 }
 
-.top-\[-15\%\] {
-  top: -15%;
-}
-
-.top-\[60\%\] {
-  top: 60%;
-}
-
-.top-\[15\%\] {
-  top: 15%;
-}
-
-.top-\[25\%\] {
-  top: 25%;
-}
-
-.top-\[20\%\] {
-  top: 20%;
+.top-\[10\%\] {
+  top: 10%;
 }
 
 .top-\[22\%\] {
   top: 22%;
+}
+
+.top-\[50\%\] {
+  top: 50%;
 }
 
 .z-10 {
@@ -748,6 +664,10 @@ video {
   border-radius: 0.25rem;
 }
 
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
 .rounded-xl {
   border-radius: 0.75rem;
 }
@@ -786,6 +706,11 @@ video {
   line-height: 1.75rem;
 }
 
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
 .font-bold {
   font-weight: 700;
 }
@@ -802,7 +727,28 @@ video {
   transition-duration: 150ms;
 }
 
+@media (min-width: 640px) {
+  .sm\:overflow-visible {
+    overflow: visible;
+  }
+
+  .sm\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:overflow-visible {
+    overflow: visible;
+  }
+}
+
 @media (min-width: 1024px) {
+  .lg\:left-\[35\%\] {
+    left: 35%;
+  }
+
   .lg\:left-\[50\%\] {
     left: 50%;
   }
@@ -817,26 +763,6 @@ video {
 
   .lg\:top-\[30\%\] {
     top: 30%;
-  }
-
-  .lg\:left-\[35\%\] {
-    left: 35%;
-  }
-
-  .lg\:top-\[70\%\] {
-    top: 70%;
-  }
-
-  .lg\:left-\[5\%\] {
-    left: 5%;
-  }
-
-  .lg\:top-\[1\%\] {
-    top: 1%;
-  }
-
-  .lg\:top-\[60\%\] {
-    top: 60%;
   }
 
   .lg\:top-\[65\%\] {

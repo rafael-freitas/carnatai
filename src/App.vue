@@ -54,13 +54,13 @@
       </div>
     </section>
 
-    <section id="abada" class="content-section flex section3">
+    <section id="abada" class="content-section flex section3 md:overflow-visible">
       <Parallaxy :speed="100" direction="opposite" class="parallax-container bg"
           :animation="(delta) => `transform: translate3d(0, ${delta}px, 0);`"
         >
       </Parallaxy>
       <Parallaxy v-if="!convidado" :speed="20" class="relative z-20 flex items-center justify-items-center">
-        <div class="box rounded-xl p-12 m-6">
+        <div class="box rounded-xl p-12 m-6 text-sm">
           <h2>Você é mais que convidado para estar comigo nesse bloquinho!</h2>
           <div class="error-box p-8 rounded font-bold" v-if="error">{{ error }}</div>
           <p>Eu, como uma soteropolitana nata nascida e criada no carnaval de Salvador, não poderia comemorar meus 30 anos, em fevereiro, de outra forma.</p>
